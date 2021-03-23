@@ -44,6 +44,10 @@ get_title <- function(term_str, division, subject) {
   }
 }
 
+# set working directory 
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path ))
+
+
 # term must be between F14-S16 or F19-F20
 plot_counts <- function(term, 
                         div = 'All',
@@ -52,8 +56,8 @@ plot_counts <- function(term,
                         interactive_lookup = c("assign", "chat", "database", "feedback", "forum", 
                                                "glossary", "languagelesson", "quiz", "survey", "workshop")) {
   # load files from the specified term
-  puf_path <- paste0("../ModuleCounts/Mdata_", term, "_ModuleCounts_PagesUrlsFiles.csv")
-  rest_path <- paste0("../ModuleCounts/Mdata_", term, "_ModuleCounts_rest.csv")
+  puf_path <- paste0("./ModuleCounts/Mdata_", term, "_ModuleCounts_PagesUrlsFiles.csv")
+  rest_path <- paste0("./ModuleCounts/Mdata_", term, "_ModuleCounts_rest.csv")
   
   # import the ModuleCounts csv files
   df <- read_csv(puf_path) %>%
@@ -88,4 +92,4 @@ plot_counts <- function(term,
 
 division_type <- c("Arts & Literature", "Humanities", "Interdisciplinary Studies", 
                    "Natural Sciences & Mathematics", "Other", "PEAR", "Social Sciences" )
-plot_counts(term = '2015Fall', div = 'All', subj = 'Mathematics')
+plot_counts(term = '2020Spring', div = 'All', subj = 'Mathematics')

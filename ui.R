@@ -37,9 +37,13 @@ shinyUI(fluidPage(
                                     choices = list("all", "Biology", "Spanish"),
                                     selected = "all")),
              
-             column(3, selectInput("selectedTeachMode", h3("Teach Mode"), 
-                                   choices = c("Online", "In-Person", "Mix-Mode", "hybrid"), 
-                                   selected = "Online")),
+             column(3, 
+                    selectInput("selectedYear", h3("year"), 
+                                   choices = c(2014:2020), 
+                                   selected = "2020"),
+                    selectInput("term", h3("term"), 
+                                choices = c("Fall", "Winter", "Spring"), 
+                                selected = "Spring")),
              
              column(3, htmlOutput("userInputAll"))
     )
