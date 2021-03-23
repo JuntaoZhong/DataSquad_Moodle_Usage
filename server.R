@@ -22,6 +22,6 @@ shinyServer(function(input, output) {
     )
     output$barChart <- renderPlot({
         termYear <- paste(toString(input$selectedYear), input$selectedTerm, sep = "")
-        plot_counts(termYear, div = 'All', subj = input$selectedDepartment)
+        plot_counts(termYear, div = 'All', subj_full = input$selectedDepartment)
     })
 })
