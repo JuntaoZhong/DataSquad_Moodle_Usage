@@ -1,9 +1,11 @@
-# Written by Hiromichi Ueda '21 in April 2021
-# Merge the ModuleCounts csv files
+# Written by Hiromichi Ueda '21 (DataSquad) in April 2021
+# Requirement: R version 4.0, with installation of packages tidyverse and data.table
+# Last executed in April 2021
 
 library(tidyverse)
 library(data.table)
 
+# get the subject abbreviation e.g.) 'cs', 'arbc'
 get_subject <- function(course_shortname, division_lookup) {
   if (tolower(substr(course_shortname, start=1, stop=4)) %in% division_lookup$subject) {
     subj_str <- tolower(substr(course_shortname, start=1, stop=4))
@@ -32,13 +34,16 @@ for (i in 1:length(terms_str)) {
     select(-category) %>% 
     left_join(read_csv(rest_path), by="shortname") %>%
     select(-category)
+  # drop '_count' from the column name
   colnames(df) <- c(c('shortname'), str_sub(colnames(df)[-1], start = 1, end=-7))
-  df_list[[i]] <- cbind(term = term_str, df)
+  df_list[[i]] <- cbind(term = term_str, df) # add the term as a new column
 }
 df_all <- rbindlist(df_list)
 df_division <- read_csv('./sb21_division_lookup.csv', )
+# add subject ('arbc'), fullname ('Arabic') and division ('Arts & Literature')
 df_all <- df_all %>% 
   mutate(subject = sapply(shortname, get_subject, division_lookup=df_division)) %>%
   left_join(df_division, by='subject')
 
-write.csv(df_all[,c(c(1,2,23,24,25), 3:22)], file='../ModuleCounts/Mdata_all.csv', row.names = FALSE)
+# bring columns term, shortname, subject, fullname and division to the left
+write.csv(df_all[,c(c(1,2,23,24,25), 3:22)], file='../ModuleCounts/Mdata_al  l.csv', row.names = FALSE)
