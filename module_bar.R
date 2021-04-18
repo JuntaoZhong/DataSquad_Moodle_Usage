@@ -57,3 +57,11 @@ plot_counts <- function(term_str,
 division_type <- c("Arts & Literature", "Humanities", "Interdisciplinary Studies", 
                    "Natural Sciences & Mathematics", "Other", "PEAR", "Social Sciences" )
 plot_counts(term_str = '2020Fall', div = c('All'), subj_full = c('All'))#= c('Mathematics', 'Statistics'))
+
+df <- read_csv("../ModuleCounts/Mdata_all.csv")
+p <- aggregate(. ~ term, df[-c(2:5)], mean) %>% # drop administrative info about course
+  gather(module, count, assign:workshop, factor_key = TRUE) %>%  # convert to long
+  ggplot(aes(x = term, y = count, group=module, color=module)) +
+    geom_point(size=1) +
+    geom_line()
+p
