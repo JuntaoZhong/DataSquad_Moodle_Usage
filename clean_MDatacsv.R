@@ -44,6 +44,6 @@ df_division <- read_csv('./sb21_division_lookup.csv', )
 df_all <- df_all %>% 
   mutate(subject = sapply(shortname, get_subject, division_lookup=df_division)) %>%
   left_join(df_division, by='subject')
-
 # bring columns term, shortname, subject, fullname and division to the left
-write.csv(df_all[,c(c(1,2,23,24,25), 3:22)], file='../ModuleCounts/Mdata_al  l.csv', row.names = FALSE)
+# reorder the module columns alphabetically
+write.csv(df_all[,c(c(1,2,23,24,25), 6:10, 4, 11:17, 3, 18:20, 5, 21:22)], file='../ModuleCounts/Mdata_all.csv', row.names = FALSE)
